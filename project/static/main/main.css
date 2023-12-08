@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
+body {
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: linear-gradient(
+        180deg,
+        #9370db 5.36%,
+        #8a2be2 35.54%,
+        #9400d3 100%
+    );
+}
+
+@keyframes zoomInOut {
+    0% {
+        font-size: 84px; /* Початковий розмір тексту */
+        transform: translateY(-50%) rotate(-3deg);
+    }
+    50% {
+        font-size: 90px; /* Максимальний розмір тексту */
+        transform: translateY(-50%) rotate(3deg);
+    }
+    100% {
+        font-size: 84px; /* Знову повертаємо до початкового розміру */
+        transform: translateY(-50%) rotate(-3deg);
+    }
+}
+
+.title {
+    margin-top: 20px;
+    height: 400px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.title h1 {
+    margin-top: 10%;
+    width: 50%;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 850;
+    font-size: 90px;
+    font-style: normal;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    animation: zoomInOut 3s ease-in-out infinite;
+    transform-origin: center;
+}
+.title img {
+    object-fit: contain;
+    right: 0;
+}
+
+.all_quiz {
+    display: flex;
+    max-width: 40%;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-left: 5px;
+}
+
+.button_quiz {
+    background-color: #6a5acd;
+    color: RGB(255, 255, 255);
+    border: 4px double gainsboro;
+    border-radius: 30px;
+    width: 100px;
+    height: 100px;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.button_text_quiz {
+    font-family: Arial;
+    font-size: 30px;
+    font-weight: normal;
+}
+
+.button_quiz:hover {
+    background: #483d8b;
+    color: white;
+}
