@@ -12,19 +12,20 @@ ref = db.reference("/", url=URL)
 
 # Read the data at the posts reference (this is a blocking operation)
 
-# ref.set({
-#     '0': {
-#         'title': 'Test1',
-#         'question': {'question1': 'test1',
-#                      'question2': 'test2',},
-#         'answers': {'question1': {'wrong': 'Answer1', 'true1': 'Answer2', 'true2': 'Answer2'}, 'question2': {'wrong': 'Answer1', 'wrong': 'Answer2', 'true2': 'Answer2'}},
-#     },
-#     '1': {
-#         'title': 'Test2',
-#         'question': {'question1': 'test1',},
-#         'answers': {'quetion1': {'wrong': 'Answer1', 'wrong2': 'Answer2', 'true': 'Answer2'}},
-#     },
-# })
+ref.set({
+    '0': {
+        'title': 'Test1',
+        'question': {'question1': 'test1',
+                     'question2': 'test2',},
+        'answers': {'question1': {'wrong': 'Answer1', 'true1': 'Answer2', 'true2': 'Answer3'}, 'question2': {'wrong': 'Answer1', 'wrong': 'Answer2', 'true2': 'Answer3'}},
+    },
+    '1': {
+        'title': 'Test2',
+        'question': {'question1': 'question1', 'question2': 'question2'},
+        'answers': {'question1': {'wrong': 'Answer1', 'wrong2': 'Answer2', 'true': 'Answer3'},
+                    'question2': {'wrong': 'Answer1', 'wrong2': 'Answer2', 'true': 'Answer3'}},
+    },
+})
 
 
 # data = ref.get()

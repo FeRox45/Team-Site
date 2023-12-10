@@ -1,4 +1,5 @@
 const all_quiz = document.querySelector(".all_quiz");
+const url_complete_quiz = "complete-quiz";
 
 fetch("/all_test")
     .then((response) => response.json())
@@ -8,33 +9,20 @@ fetch("/all_test")
         data.forEach((item) => {
             const quiz = document.createElement("div");
             const title = document.createElement("h1");
-
+            // Ading classes
             quiz.classList.add("button_quiz");
             title.classList.add("button_text_quiz");
-
+            // Adding elements
             title.innerText = `Quiz ${numCallbackRuns + 1}`;
+            quiz.id = numCallbackRuns;
+            quiz.addEventListener("click", () => test_func(quiz.id));
             quiz.append(title);
             all_quiz.append(quiz);
             numCallbackRuns++;
-
-            // console.log(`Title: ${item.title}`);
-
-            // for (const [questionKey, questionValue] of Object.entries(
-            //     item.question
-            // )) {
-            //     console.log(`${questionKey}: ${questionValue}`);
-            // }
-
-            // for (const [answerKey, answerValue] of Object.entries(
-            //     item.answers
-            // )) {
-            //     for (const [subKey, subValue] of Object.entries(answerValue)) {
-            //         const answerBool = subKey.replace(/\d/g, "");
-            //         console.log(`${answerBool}: ${subValue}`);
-            //     }
-            // }
-
-            // console.log("\n");
         });
     })
     .catch((error) => console.error("Error:", error));
+
+function test_func(id) {
+    window.location.href = `/${url_complete_quiz}/${id}`;
+}

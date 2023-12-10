@@ -1,0 +1,19 @@
+.button-main {
+    width: 40%;
+    height: 10vh;
+    border-radius: 20px;
+    border: 1px;
+    background-color: darkgrey;
+}
+
+.button-main a {
+    font-size: large;
+    text-decoration: none;
+    color: rgb(85, 0, 255);
+    font-family: bold;
+}
+
+.button-main:hover {
+    cursor: pointer;
+    background-color: gray;
+}
