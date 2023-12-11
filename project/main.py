@@ -11,7 +11,7 @@ cred = credentials.Certificate("key.json")
 firebase_admin.initialize_app(cred)
 
 # Get a database reference to our posts
-ref = db.reference("/", url=URL)
+ref = db.reference("/quiz", url=URL)
 
 app = Flask(__name__, static_folder='static',
             template_folder='templates')
@@ -39,9 +39,23 @@ def show_test():
 
 @app.route('/get-quiz/<int:test_id>', methods=['GET'])
 def get_test(test_id):
-    ref = db.reference(f"/{test_id}", url=URL)
+    ref = db.reference(f"/quiz/{test_id}", url=URL)
     datas = ref.get()
     return datas
+
+@app.route('/profile', methods=['GET'])
+def show_profile():
+    return render_template('profile/profile.html')
+
+@app.route('/profile/<int:profile_id>', methods=['POST'])
+def get_profile(profile_id):
+    ref = db.reference(f"/profiles/{profile_id}", url=URL)
+    datas = ref.get()
+    return datas
+
+@app.route('/add-quiz', methods=['GET'])
+def add_quiz():
+    return render_template('quiz/add-quiz.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)

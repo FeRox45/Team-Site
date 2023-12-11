@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Додати новий тест</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='quiz/add-quiz.css') }}"
+        />
+    </head>
+    <body>
+        <div class="content">
+            <h1>Додати тест</h1>
+            <input class="quiz-title" type="text" placeholder="Назва тесту" />
+            <div class="container-questions"></div>
+            <br />
+            <div class="add-new-question"><h3>Додати ще 1 питання</h3></div>
+            <br />
+            <div class="end-create-quiz">
+                <h3>Завершити створення тесту</h3>
+            </div>
+        </div>
+        <script
+            type="module"
+            src="{{ url_for('static', filename='quiz/add-quiz.js') }}"
+        ></script>
+    </body>
+</html>

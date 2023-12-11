@@ -1,0 +1,150 @@
+body {
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: linear-gradient(
+        180deg,
+        #9370db 5.36%,
+        #8a2be2 35.54%,
+        #9400d3 100%
+    );
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.quiz-title {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 40%; /* Adjust the width as needed */
+    box-sizing: border-box;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.add-new-question {
+    background-color: #1e003a;
+    width: 40vw;
+}
+
+.add-new-question h3 {
+    color: white;
+    font-size: 120%;
+}
+
+.add-new-question:hover {
+    cursor: pointer;
+}
+
+.end-create-quiz {
+    background-color: #1e003a;
+    width: 40vw;
+}
+
+.end-create-quiz h3 {
+    color: white;
+    font-size: 120%;
+}
+
+.end-create-quiz:hover {
+    cursor: pointer;
+}
+
+.container-questions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.container-questions h3 {
+    color: white;
+    font-size: 120%;
+}
+
+.container-questions #answer,
+.container-questions #question_input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 40%; /* Adjust the width as needed */
+    box-sizing: border-box;
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.question {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.container_ans {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+}
+
+.container_ans #answer {
+    width: 100%;
+}
+
+.container_ans .button-remove-ans {
+    background-color: #660000;
+    height: 4.5vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.container_ans .button-remove-ans:hover {
+    cursor: pointer;
+}
+
+.container_btns_question {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    gap: 2px;
+}
+
+.button-add-ans {
+    background-color: #1e003a;
+}
+
+.button-rem-question,
+.button-add-ans {
+    width: 20vw;
+    border-radius: 5px;
+}
+
+.button-rem-question {
+    background-color: #660000;
+}
+
+.button-add-ans,
+.button-rem-question:hover {
+    cursor: pointer;
+}
+
+.input-right-ans {
+    width: 4vw;
+    height: 4vh;
+}

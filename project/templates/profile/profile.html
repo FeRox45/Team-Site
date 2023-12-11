@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Профіль</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='profile/profile.css') }}"
+        />
+    </head>
+    <body>
+        <div class="content">
+            <h1>Профіль користувача</h1>
+            <div class="profile">
+                <img src="" alt="Photo" class="profile-photo" />
+                <h1 class="nickname">Nickname</h1>
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename='profile/profile.js') }}"></script>
+    </body>
+</html>
