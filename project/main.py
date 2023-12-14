@@ -3,8 +3,6 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
-import json
-
 URL = 'https://site-e8af0-default-rtdb.europe-west1.firebasedatabase.app/'
 
 cred = credentials.Certificate("key.json")
@@ -56,6 +54,10 @@ def get_profile(profile_id):
 @app.route('/add-quiz', methods=['GET'])
 def add_quiz():
     return render_template('quiz/add-quiz.html')
+
+@app.route('/auth', methods=['GET'])
+def auth():
+    return render_template('profile/auth.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
