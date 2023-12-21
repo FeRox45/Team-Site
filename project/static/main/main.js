@@ -55,7 +55,7 @@ fetch("/all_test")
                 const quiz = document.createElement("div");
                 const title = document.createElement("h1");
                 const quiz_num = document.createElement("h3");
-                const avtor_quiz = document.createElement("h3");
+                const avtor_quiz = document.createElement("a");
                 // Ading classes
                 quiz.classList.add("button_quiz");
                 quiz_num.classList.add("button_num_quiz");
@@ -64,6 +64,7 @@ fetch("/all_test")
                 quiz_num.innerText = `Quiz ${num + 1}`;
                 title.innerText = item.title;
                 avtor_quiz.innerText = `Автор: ${item.author}`;
+                avtor_quiz.href = "/";
                 quiz.id = index;
                 quiz.addEventListener("click", () => test_func(quiz.id));
                 quiz.append(quiz_num, title, avtor_quiz);
