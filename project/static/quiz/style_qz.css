@@ -60,6 +60,10 @@ body {
     margin-top: 20px;
 }
 
+.answers:hover {
+    cursor: pointer;
+}
+
 .question h2 {
     inline-size: 100%;
     overflow-wrap: break-word;

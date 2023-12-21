@@ -1,0 +1,7 @@
+{% extends 'auth/layout_auth.html' %} {% block title %}Вхід{% endblock %}
+{%block title_auth %}Вхід{% endblock %} {% block script %}
+<script
+    type="module"
+    src="{{ url_for('static', filename='auth/login/script_login.js') }}"
+></script>
+{% endblock %} {% block text_submit %}Увійти в систему{% endblock %}

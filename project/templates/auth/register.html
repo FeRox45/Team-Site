@@ -1,0 +1,13 @@
+{% extends 'auth/layout_auth.html' %} {% block title %}Рейстрація{% endblock %}
+{%block title_auth %}Рейстрація{% endblock %} {% block script %}
+<script
+    type="module"
+    src="{{ url_for('static', filename='auth/register/script_reg.js') }}"
+></script>
+{% endblock %} {% block text_submit %}Створити профіль{% endblock %} {% block
+userName %}
+<label for="UserName">Нікнейм:</label>
+<div class="input-container">
+    <input type="text" id="UserName" required />
+</div>
+{% endblock %}

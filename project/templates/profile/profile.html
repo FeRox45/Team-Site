@@ -2,21 +2,47 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Профіль</title>
+        <title>User Profile</title>
         <link
             rel="stylesheet"
-            href="{{ url_for('static', filename='profile/profile.css') }}"
+            href="{{ url_for('static', filename='profile/profile.css' )}}"
         />
     </head>
     <body>
-        <div class="content">
-            <h1>Профіль користувача</h1>
-            <div class="profile">
-                <img src="" alt="Photo" class="profile-photo" />
-                <h1 class="nickname">Nickname</h1>
+        <div class="container">
+            <div class="profileContent">
+                <img
+                    src=""
+                    alt="Аватар"
+                    class="avatar"
+                    id="avatarImage"
+                    onclick="window.triggerFileInput()"
+                />
+                <input
+                    type="file"
+                    id="avatarInput"
+                    accept="image/*"
+                    style="display: none"
+                />
+            </div>
+            <div>
+                <h3 id="Nickname">Name</h3>
+                <h3 id="Email">Пошта: example@example.com</h3>
+                <button onclick="logout()">Вийти з аккунту</button>
+                <a href="/">Повернутись на головну сторінку</a>
             </div>
         </div>
-        <script src="{{ url_for('static', filename='profile/profile.js') }}"></script>
+
+        <script
+            type="module"
+            src="{{ url_for('static', filename='profile/profile.js')}}"
+        ></script>
+        <script>
+            function logout() {
+                localStorage.removeItem("user");
+                alert("Ви вийшли з акаунта");
+                window.location.href = "/";
+            }
+        </script>
     </body>
 </html>

@@ -2,15 +2,16 @@
     width: 40%;
     height: 10vh;
     border-radius: 20px;
-    border: 1px;
+    border: 1px solid;
     background-color: darkgrey;
-}
-
-.button-main a {
     font-size: large;
     text-decoration: none;
     color: rgb(85, 0, 255);
     font-family: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .button-main:hover {

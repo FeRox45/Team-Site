@@ -35,6 +35,7 @@ const getQuiz = async () => {
     const response = await fetch(`/${url_get_quiz}/${quizId}`, {});
     const quiz = await response.json();
     max_question = Object.keys(quiz.question).length;
+    console.log(JSON.stringify(quiz));
     return quiz;
 };
 

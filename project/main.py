@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, request
+from flask import Flask, render_template, request, redirect
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
@@ -45,9 +45,9 @@ def get_test(test_id):
 def show_profile():
     return render_template('profile/profile.html')
 
-@app.route('/profile/<int:profile_id>', methods=['POST'])
-def get_profile(profile_id):
-    ref = db.reference(f"/profiles/{profile_id}", url=URL)
+@app.route('/profile/<string:profile_uid>', methods=['POST'])
+def get_profile(profile_uid):
+    ref = db.reference(f"/profiles/{profile_uid}", url=URL)
     datas = ref.get()
     return datas
 
@@ -57,7 +57,15 @@ def add_quiz():
 
 @app.route('/auth', methods=['GET'])
 def auth():
-    return render_template('profile/auth.html')
+    return redirect('/auth/register')
+
+@app.route('/auth/register', methods=['GET'])
+def register():
+    return render_template('auth/register.html')
+
+@app.route('/auth/login', methods=['GET'])
+def login():
+    return render_template('auth/login.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)

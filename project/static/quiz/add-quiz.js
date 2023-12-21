@@ -3,7 +3,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import {
     getDatabase,
     ref,
-    onValue,
     update,
     get,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
@@ -141,6 +140,7 @@ async function addQuestionToDB() {
     update(quizRef, quizData)
         .then(() => {
             console.log("New user data saved successfully!");
+            window.location.href = "/";
         })
         .catch((error) => {
             console.error("Error saving new user data: ", error);
