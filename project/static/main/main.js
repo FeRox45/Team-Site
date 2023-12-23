@@ -1,43 +1,79 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import {
     getAuth,
+    EmailAuthProvider,
     signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithCredential,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDk0CfC2THqgm7nFhdtNXL_YXepSlpBkeY",
+    apiKey: "AIzaSyBrsKx3-0t2ftwhZHKfU6aa2I2SgD1-sDo",
     authDomain: "site-e8af0.firebaseapp.com",
     databaseURL:
         "https://site-e8af0-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "site-e8af0",
     storageBucket: "site-e8af0.appspot.com",
     messagingSenderId: "276359374008",
-    appId: "1:276359374008:web:dae59ca9dc907297a1004d",
+    appId: "1:276359374008:web:21818d5f554974eea1004d",
 };
 
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
-async function getCurrentUser() {
-    const storedUserData = localStorage.getItem("user");
-    const user = JSON.parse(storedUserData);
-    signInWithEmailAndPassword(auth, user.email, user.password)
-        .then((userCredential) => {
-            // Signed in
-            if (userCredential.user.emailVerified) {
-                Succes();
-            } else {
-                console.log("not found your account");
-            }
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            console.log(errorCode);
-        });
+var googleAccessToken = localStorage.getItem("GoogleToken");
+var EmailToken = localStorage.getItem("EmailToken");
+
+function signInWithGoogleToken(googleAccessToken) {
+    if (googleAccessToken) {
+        // Використання токену для аутентифікації
+        var credential = GoogleAuthProvider.credential(null, googleAccessToken);
+
+        signInWithCredential(auth, credential)
+            .then((userCredential) => {
+                var user = userCredential.user;
+                if (user.emailVerified) {
+                    Succes();
+                }
+            })
+            .catch((error) => {
+                console.error("Error signing in with Google token:", error);
+            });
+    }
 }
 
-getCurrentUser();
+function signInWithEmailToken(EmailToken) {
+    if (EmailToken) {
+        EmailToken = JSON.parse(EmailToken);
+        var credential = EmailAuthProvider.credential(
+            EmailToken.email,
+            EmailToken.password
+        );
+        console.log(credential);
+        signInWithCredential(auth, credential)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                if (user.emailVerified) {
+                    Succes();
+                }
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.error(error);
+            });
+    }
+}
+
+if (auth.currentUser == null) {
+    signInWithGoogleToken(googleAccessToken);
+    signInWithEmailToken(EmailToken);
+} else {
+    if (auth.currentUser) {
+        Succes();
+    }
+}
 
 const all_quiz = document.querySelector(".all_quiz");
 const url_complete_quiz = "complete-quiz";

@@ -12,22 +12,35 @@
     <body>
         <div class="modal-content">
             <form id="Form">
-                <h2>{% block title_auth %}{% endblock %}</h2>
-                {% block userName %}{% endblock %}
-                <label for="Email">Пошта:</label>
-                <div class="input-container">
-                    <input type="text" id="Email" required />
+                <div class="EmailAuth">
+                    <h2>{% block title_auth %}{% endblock %}</h2>
+                    {% block userName %}{% endblock %}
+                    <label for="Email">Пошта:</label>
+                    <div class="input-container">
+                        <input type="text" id="Email" required />
+                    </div>
+                    <label for="Password">Пароль:</label>
+                    <div class="input-container">
+                        <input type="password" id="Password" required />
+                        <button id="showPassword" type="button">
+                            Показати
+                        </button>
+                    </div>
+                    <p style="color: red"></p>
+                    <input
+                        type="submit"
+                        value="{% block text_submit %}{% endblock %}"
+                    />
                 </div>
-                <label for="Password">Пароль:</label>
-                <div class="input-container">
-                    <input type="password" id="Password" required />
-                    <button id="showPassword" type="button">Показати</button>
+
+                <div class="SocialAuth">
+                    <div class="GoogleAuth" onclick="auth_Google()">
+                        <img
+                            src="https://firebasestorage.googleapis.com/v0/b/site-e8af0.appspot.com/o/site_img%2Fgoogle.png?alt=media&token=15dc475d-fceb-487c-80b0-9b250eb785b4"
+                            alt=""
+                        />
+                    </div>
                 </div>
-                <p style="color: red"></p>
-                <input
-                    type="submit"
-                    value="{% block text_submit %}{% endblock %}"
-                />
             </form>
         </div>
 

@@ -46,14 +46,11 @@ body {
     color: red;
 }
 
-button {
+#showPassword {
     padding: 10px 20px;
     cursor: pointer;
     border: none;
     border-radius: 5px;
-}
-
-#showPassword {
     background-color: #008cba;
     color: white;
 }
@@ -62,7 +59,7 @@ button {
     background-color: #006080;
 }
 
-#Form input[type="submit"] {
+.EmailAuth input[type="submit"] {
     padding: 10px 20px;
     cursor: pointer;
     border: none;
@@ -71,18 +68,19 @@ button {
     background-color: #45a049;
 }
 
-#Form input[type="submit"]:hover {
+.EmailAuth input[type="submit"]:hover {
     background-color: #2e6a31;
 }
 
-#Form {
+.EmailAuth {
+    width: 100%;
     justify-content: center;
     text-align: center;
     align-items: center;
 }
 
 .input-container {
-    margin-left: 35%;
+    margin-left: 17vw;
     display: flex;
     margin-bottom: 15px;
     align-items: center;
@@ -107,4 +105,38 @@ input {
     margin: 5px 0;
     border-radius: 3px;
     border: 1px solid #888;
+}
+
+.GoogleAuth {
+    max-width: 50px;
+    max-height: 50px;
+    overflow: hidden;
+    background-color: rgb(240, 240, 240);
+    border-radius: 10%;
+    transition: background-color 0.3s ease;
+}
+
+.GoogleAuth:hover {
+    background-color: rgb(220, 220, 220);
+    cursor: pointer;
+}
+
+.GoogleAuth img {
+    width: 100%;
+    height: auto;
+}
+
+#Form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.SocialAuth {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }

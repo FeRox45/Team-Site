@@ -7,12 +7,21 @@
             rel="stylesheet"
             href="{{ url_for('static', filename='profile/profile.css' )}}"
         />
+        <meta
+            name="google-signin-client_id"
+            content="276359374008-afvl6u84rnaf2gc5j0tgkeo0ivsqtbll.apps.googleusercontent.com"
+        />
+        <script
+            src="https://apis.google.com/js/platform.js"
+            async
+            defer
+        ></script>
     </head>
     <body>
         <div class="container">
             <div class="profileContent">
                 <img
-                    src=""
+                    src="https://euroinverters.com.ua/sites/default/files/node_autoimage_images/281944_1b8a275dd5c482f7c0886dab3522077b.jpeg"
                     alt="Аватар"
                     class="avatar"
                     id="avatarImage"
@@ -32,17 +41,18 @@
                 <a href="/">Повернутись на головну сторінку</a>
             </div>
         </div>
-
         <script
             type="module"
             src="{{ url_for('static', filename='profile/profile.js')}}"
         ></script>
         <script>
             function logout() {
-                localStorage.removeItem("user");
+                localStorage.removeItem("GoogleToken");
+                localStorage.removeItem('EmailToken');
                 alert("Ви вийшли з акаунта");
                 window.location.href = "/";
             }
         </script>
+    </body>
     </body>
 </html>

@@ -4,6 +4,8 @@ import {
     createUserWithEmailAndPassword,
     sendEmailVerification,
     updateProfile,
+    GoogleAuthProvider,
+    signInWithPopup,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 import {
@@ -13,19 +15,40 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDk0CfC2THqgm7nFhdtNXL_YXepSlpBkeY",
+    apiKey: "AIzaSyBrsKx3-0t2ftwhZHKfU6aa2I2SgD1-sDo",
     authDomain: "site-e8af0.firebaseapp.com",
     databaseURL:
         "https://site-e8af0-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "site-e8af0",
     storageBucket: "site-e8af0.appspot.com",
     messagingSenderId: "276359374008",
-    appId: "1:276359374008:web:dae59ca9dc907297a1004d",
+    appId: "1:276359374008:web:21818d5f554974eea1004d",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+function auth_Google() {
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            const user = result.user;
+            localStorage.setItem("GoogleToken", token);
+            console.log(user);
+            window.location.href = "/";
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            const email = error.customData.email;
+            const credential = GoogleAuthProvider.credentialFromError(error);
+        });
+}
+
+window.auth_Google = auth_Google;
 
 const database = getDatabase(app);
 const profilesRef = ref(database, "profiles");
@@ -45,13 +68,10 @@ async function signUp(userName, email, password) {
             displayName: userName,
         });
         console.log("User registered:", userCredential.user);
+        userCredential.getIdToken().then((firebaseToken) => {
+            localStorage.setItem("EmailToken", firebaseToken);
+        });
 
-        // Зберегти дані користувача в localStorage
-        const user = {
-            email: email,
-            password: password,
-        };
-        localStorage.setItem("user", JSON.stringify(user));
         const profile_data = {
             [userCredential.user.uid]: {
                 compl_quiz: 0,
