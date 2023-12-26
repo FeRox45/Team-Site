@@ -5,22 +5,32 @@ import {
     ref,
     update,
     get,
+    child,
+    runTransaction,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import {
+    getAuth,
+    EmailAuthProvider,
+    GoogleAuthProvider,
+    signInWithCredential,
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDk0CfC2THqgm7nFhdtNXL_YXepSlpBkeY",
+    apiKey: "AIzaSyBrsKx3-0t2ftwhZHKfU6aa2I2SgD1-sDo",
     authDomain: "site-e8af0.firebaseapp.com",
     databaseURL:
         "https://site-e8af0-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "site-e8af0",
     storageBucket: "site-e8af0.appspot.com",
     messagingSenderId: "276359374008",
-    appId: "1:276359374008:web:dae59ca9dc907297a1004d",
+    appId: "1:276359374008:web:21818d5f554974eea1004d",
 };
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const quizRef = ref(database, "quiz");
+const profilesRef = ref(database, "profiles");
+const auth = getAuth(app);
 
 //TODO app
 const button_add_question = document.querySelector(".add-new-question");
@@ -32,6 +42,54 @@ let question_num = 1;
 
 end_creating_quiz.addEventListener("click", addQuestionToDB);
 button_add_question.addEventListener("click", add_question);
+
+var googleAccessToken = localStorage.getItem("GoogleToken");
+var EmailToken = localStorage.getItem("EmailToken");
+let user = null;
+
+function signInWithGoogleToken(googleAccessToken) {
+    if (googleAccessToken) {
+        // Використання токену для аутентифікації
+        var credential = GoogleAuthProvider.credential(null, googleAccessToken);
+
+        signInWithCredential(auth, credential)
+            .then((userCredential) => {
+                user = userCredential.user;
+            })
+            .catch((error) => {
+                console.error("Error signing in with Google token:", error);
+            });
+    }
+}
+
+function signInWithEmailToken(EmailToken) {
+    if (EmailToken) {
+        EmailToken = JSON.parse(EmailToken);
+        var credential = EmailAuthProvider.credential(
+            EmailToken.email,
+            EmailToken.password
+        );
+        console.log(credential);
+        signInWithCredential(auth, credential)
+            .then((userCredential) => {
+                user = userCredential.user;
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.error(error);
+            });
+    }
+}
+
+if (auth.currentUser == null) {
+    signInWithGoogleToken(googleAccessToken);
+    signInWithEmailToken(EmailToken);
+} else {
+    if (auth.currentUser) {
+        user = auth.currentUser;
+    }
+}
 
 function add_question() {
     const question = document.createElement("div");
@@ -108,11 +166,13 @@ function removeQustion(element_question) {
 async function addQuestionToDB() {
     const title_quiz = document.querySelector(".quiz-title").value;
     const num = await get_num();
+    console.log(user);
     const quizData = {
         [num]: {
             title: title_quiz,
             question: {},
             answers: {},
+            author: user.displayName,
         },
     };
 
@@ -139,13 +199,19 @@ async function addQuestionToDB() {
     }
     update(quizRef, quizData)
         .then(() => {
-            console.log("New user data saved successfully!");
+            const userQuizsRef = child(profilesRef, `${user.uid}/quizs`);
+            runTransaction(userQuizsRef, (currentData) => {
+                if (!currentData) {
+                    return [num];
+                }
+                currentData.push(num);
+            });
+
             window.location.href = "/";
         })
         .catch((error) => {
             console.error("Error saving new user data: ", error);
         });
-    console.log(JSON.stringify(quizData, null, 2));
 }
 
 function get_num() {
@@ -167,16 +233,3 @@ function get_num() {
         }, 1000);
     });
 }
-
-// const newUser = {
-//     username: "JohnDoe",
-//     email: "johndoe@example.com",
-// };
-
-// update(quizRef, newUser)
-//     .then(() => {
-//         console.log("New user data saved successfully!");
-//     })
-//     .catch((error) => {
-//         console.error("Error saving new user data: ", error);
-//     });

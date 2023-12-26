@@ -12,6 +12,8 @@ import {
     getDatabase,
     ref,
     update,
+    get,
+    child,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {
@@ -28,7 +30,14 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const database = getDatabase(app);
+const profilesRef = ref(database, "profiles");
 const provider = new GoogleAuthProvider();
+
+function SuccesAuth() {
+    alert("Ви успішно увійшли в систему");
+    window.location.href = "/";
+}
 
 function auth_Google() {
     signInWithPopup(auth, provider)
@@ -37,21 +46,43 @@ function auth_Google() {
             const token = credential.accessToken;
             const user = result.user;
             localStorage.setItem("GoogleToken", token);
-            console.log(user);
-            window.location.href = "/";
+
+            get(child(profilesRef, `${user.uid}`))
+                .then((snapshot) => {
+                    if (!snapshot.exists()) {
+                        const profile_data = {
+                            UserName: user.displayName,
+                            email: user.email,
+                            quizs: null,
+                            compl_quiz: null,
+                            true_ans: 0,
+                            wrong_ans: 0,
+                        };
+
+                        update(profilesRef, { [user.uid]: profile_data })
+                            .then(() => {
+                                SuccesAuth();
+                            })
+                            .catch((error) => {
+                                console.error(
+                                    "Error adding new user data: ",
+                                    error
+                                );
+                            });
+                    } else {
+                        SuccesAuth();
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error checking user data: ", error);
+                });
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            const email = error.customData.email;
-            const credential = GoogleAuthProvider.credentialFromError(error);
+            console.error("Error signing in: ", error);
         });
 }
 
 window.auth_Google = auth_Google;
-
-const database = getDatabase(app);
-const profilesRef = ref(database, "profiles");
 
 const userName = document.getElementById("UserName");
 const userEmail = document.getElementById("Email");
@@ -64,17 +95,21 @@ async function signUp(userName, email, password) {
             email,
             password
         );
-        await updateProfile(userCredential.user, {
+        const user = userCredential.user;
+        await updateProfile(user, {
             displayName: userName,
         });
-        console.log("User registered:", userCredential.user);
+        console.log("User registered:", user);
         userCredential.getIdToken().then((firebaseToken) => {
             localStorage.setItem("EmailToken", firebaseToken);
         });
 
         const profile_data = {
-            [userCredential.user.uid]: {
-                compl_quiz: 0,
+            [user.uid]: {
+                UserName: user.displayName,
+                email: user.email,
+                quizs: [],
+                compl_quiz: [],
                 true_ans: 0,
                 wrong_ans: 0,
             },

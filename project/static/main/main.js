@@ -2,7 +2,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import {
     getAuth,
     EmailAuthProvider,
-    signInWithEmailAndPassword,
     GoogleAuthProvider,
     signInWithCredential,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";

@@ -5,6 +5,13 @@ import {
     GoogleAuthProvider,
     signInWithPopup,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import {
+    getDatabase,
+    ref,
+    update,
+    get,
+    child,
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBrsKx3-0t2ftwhZHKfU6aa2I2SgD1-sDo",
@@ -21,10 +28,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
+const database = getDatabase(app);
+const profilesRef = ref(database, "profiles");
 const provider = new GoogleAuthProvider();
 
 const userEmail = document.getElementById("Email");
 const userPassword = document.getElementById("Password");
+
+function SuccesAuth() {
+    alert("Ви успішно увійшли в систему");
+    window.location.href = "/";
+}
 
 async function signIn(email, password) {
     signInWithEmailAndPassword(auth, email, password)
@@ -36,9 +50,7 @@ async function signIn(email, password) {
                     password: password,
                 })
             );
-
-            alert("Ви успішно увійшли в систему");
-            window.location.href = "/";
+            SuccesAuth();
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -59,13 +71,39 @@ function auth_Google() {
             const token = credential.accessToken;
             const user = result.user;
             localStorage.setItem("GoogleToken", token);
-            console.log(user);
+
+            get(child(profilesRef, `${user.uid}`))
+                .then((snapshot) => {
+                    if (!snapshot.exists()) {
+                        const profile_data = {
+                            UserName: user.displayName,
+                            email: user.email,
+                            quizs: null,
+                            compl_quiz: null,
+                            true_ans: 0,
+                            wrong_ans: 0,
+                        };
+
+                        update(profilesRef, { [user.uid]: profile_data })
+                            .then(() => {
+                                SuccesAuth();
+                            })
+                            .catch((error) => {
+                                console.error(
+                                    "Error adding new user data: ",
+                                    error
+                                );
+                            });
+                    } else {
+                        SuccesAuth();
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error checking user data: ", error);
+                });
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            const email = error.customData.email;
-            const credential = GoogleAuthProvider.credentialFromError(error);
+            console.error("Error signing in: ", error);
         });
 }
 
