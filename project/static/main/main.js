@@ -42,6 +42,8 @@ function signInWithGoogleToken(googleAccessToken) {
     }
 }
 
+const url = "/sign_email";
+
 function signInWithEmailToken(EmailToken) {
     if (EmailToken) {
         EmailToken = JSON.parse(EmailToken);
@@ -49,7 +51,6 @@ function signInWithEmailToken(EmailToken) {
             EmailToken.email,
             EmailToken.password
         );
-        console.log(credential);
         signInWithCredential(auth, credential)
             .then((userCredential) => {
                 const user = userCredential.user;
